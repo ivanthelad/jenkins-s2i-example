@@ -4,7 +4,7 @@
   <version>1.642.2</version>
   <numExecutors>5</numExecutors>
   <mode>NORMAL</mode>
-  <useSecurity>false</useSecurity>
+  <useSecurity>true</useSecurity>
   <authorizationStrategy class="hudson.security.GlobalMatrixAuthorizationStrategy">
     <permission>hudson.model.Computer.Configure:admin</permission>
     <permission>hudson.model.Computer.Configure:system_builder</permission>
