@@ -18,7 +18,7 @@
 
    stage &apos;Promote STAGE&apos;
    // clean up. keep the imagestream
-   sh &quot;${ocCmd} start-build ruby-sample-build-fc  -n pushed &quot;
+   sh &quot;${ocCmd} start-build ruby-sample-build-fc    --wait=false -n pushed &quot ;
    // deploy stage image
 
 }
