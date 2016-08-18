@@ -19,8 +19,14 @@
           <name>targetTag</name>                                                
           <description>Should like something like helloWorld/bla:latest</description>                                           
           <defaultValue>hi</defaultValue>                                         
+        </hudson.model.StringParameterDefinition>  
+      <hudson.model.StringParameterDefinition>                                
+          <name>sourceTag</name>                                            
+          <description></description>                                           
+          <defaultValue></defaultValue>                                         
         </hudson.model.StringParameterDefinition>                               
-      </parameterDefinitions>                                                   
+      </parameterDefinitions>    
+      
     </hudson.model.ParametersDefinitionProperty>
   </properties>        
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.0">
