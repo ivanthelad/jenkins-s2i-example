@@ -9,25 +9,41 @@
       node {
       
       
-   // define commands
-   def ocCmd = &quot;/usr/bin/oc --token=`cat /var/run/secrets/kubernetes.io/serviceaccount/token` --server=https://openshift.default.svc.cluster.local --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt&quot;
 
-   stage &apos;TAG DEV&apos;
+
+   // define commands
+   def ocCmd = "/usr/bin/oc --token=`cat /var/run/secrets/kubernetes.io/serviceaccount/token` --server=https://openshift.default.svc.cluster.local --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+
+   stage 'Start Build '
+   echo "Starting Build"
+   //sh "${ocCmd} start-build cakephp-example  --follow  --wait=true -n pushed  "
+   sh "${ocCmd} describe istag jenkins:latest -n ci > result"
+   def lines = readFile('result')
+   echo "App Succesfully built  based on following Tag information "
+   echo "${lines}"
+
+   stage 'TAG Image'
    // tag for stage
-   sh &quot;${ocCmd} tag pushed/cakephp-example:latest pushed/cakephp-example:jenkins -n pushed&quot;
-   stage 'Aprroval'
+   sh "${ocCmd} tag pushed/cakephp-example:latest pushed/cakephp-example:jenkins -n pushed"
+   sh "${ocCmd} describe istag jenkins:latest -n ci| grep commit > commitinfo"
+   def lines2 = readFile('commitinfo')
+   echo "App Succesfully Tagged  based on following Tag information "
+   echo "${lines2}"
+   
+   stage 'Aprroval Image from Promotion'
    timeout(time: 4, unit: 'HOURS') {
-       input message: 'Do you want to deploy to production?', submitter: 'ops'
+       input message: "Do you want to deploy to production?"
    }
-   stage &apos;Promote STAGE&apos;
+   stage 'Promote STAGE'
    // clean up. keep the imagestream
-   sh &quot;${ocCmd} start-build ruby-sample-build-fc    --wait=false -n pushed &quot;
+   sh "${ocCmd} start-build ruby-sample-build-fc  --follow  --wait=true -n pushed "
    // deploy stage image
+   echo "Success"
 
 }
 
 def version() {
-  def matcher = readFile(&apos;pom.xml&apos;) =~ &apos;&lt;version&gt;(.+)&lt;/version&gt;&apos;
+  def matcher = readFile('pom.xml') =~ '&lt;version&gt;(.+)&lt;/version&gt;'
   matcher ? matcher[0][1] : null
 }
 
