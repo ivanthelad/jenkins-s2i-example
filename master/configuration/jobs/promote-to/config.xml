@@ -65,6 +65,8 @@
    sh "${ocCmd} start-build ruby-sample-build-fc  --follow  --wait=true -n pushed "
    // deploy stage image
    echo "Success"
+  stage 'Tag Source code '
+  echo "TODO, Directly after promotion we should tag the source code in git "
 
 }
 
