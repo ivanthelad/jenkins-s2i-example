@@ -6,17 +6,13 @@
   <properties/>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.0">
     <script>
+      node {
+      
+      
    // define commands
    def ocCmd = &quot;/usr/bin/oc --token=`cat /var/run/secrets/kubernetes.io/serviceaccount/token` --server=https://openshift.default.svc.cluster.local --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt&quot;
 
-
-
-
-   
-
    stage &apos;TAG DEV&apos;
-
-
    // tag for stage
    sh &quot;${ocCmd} tag pushed/cakephp-example:latest pushed/cakephp-example:jenkins -n pushed&quot;
 
@@ -25,7 +21,7 @@
    sh &quot;${ocCmd} start-build ruby-sample-build-fc  -n pushed &quot;
    // deploy stage image
 
-
+}
 
 def version() {
   def matcher = readFile(&apos;pom.xml&apos;) =~ &apos;&lt;version&gt;(.+)&lt;/version&gt;&apos;
