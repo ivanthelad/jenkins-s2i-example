@@ -15,7 +15,10 @@
    stage &apos;TAG DEV&apos;
    // tag for stage
    sh &quot;${ocCmd} tag pushed/cakephp-example:latest pushed/cakephp-example:jenkins -n pushed&quot;
-
+   stage 'Aprroval'
+   timeout(time: 4, unit: 'HOURS') {
+       input message: 'Do you want to deploy to production?', submitter: 'ops'
+   }
    stage &apos;Promote STAGE&apos;
    // clean up. keep the imagestream
    sh &quot;${ocCmd} start-build ruby-sample-build-fc    --wait=false -n pushed &quot;
