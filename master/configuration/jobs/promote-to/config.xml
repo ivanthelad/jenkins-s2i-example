@@ -18,7 +18,7 @@
         <hudson.model.StringParameterDefinition>                                
           <name>targetTag</name>                                                
           <description>Should like something like helloWorld/bla:latest</description>                                           
-          <defaultValue></defaultValue>                                         
+          <defaultValue>hi</defaultValue>                                         
         </hudson.model.StringParameterDefinition>                               
       </parameterDefinitions>                                                   
     </hudson.model.ParametersDefinitionProperty>
@@ -35,6 +35,7 @@
 
    stage 'Start Build '
    echo "Starting Build"
+   echo "${targetTag}"
    //sh "${ocCmd} start-build cakephp-example  --follow  --wait=true -n pushed  "
    sh "${ocCmd} describe istag jenkins:latest -n ci > result"
    def lines = readFile('result')
