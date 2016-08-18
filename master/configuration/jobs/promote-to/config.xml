@@ -5,7 +5,7 @@
   <keepDependencies>false</keepDependencies>
   <properties/>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.0">
-    <script>node(&apos;jdk8&apos;) {
+    <script>
    // define commands
    def ocCmd = &quot;/usr/bin/oc --token=`cat /var/run/secrets/kubernetes.io/serviceaccount/token` --server=https://openshift.default.svc.cluster.local --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt&quot;
 
@@ -25,7 +25,7 @@
    sh &quot;${ocCmd} start-build ruby-sample-build-fc  -n pushed &quot;
    // deploy stage image
 
-}
+
 
 def version() {
   def matcher = readFile(&apos;pom.xml&apos;) =~ &apos;&lt;version&gt;(.+)&lt;/version&gt;&apos;
