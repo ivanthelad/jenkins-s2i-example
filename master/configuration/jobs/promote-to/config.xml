@@ -34,6 +34,7 @@
    stage 'Start Build '
    echo "Starting Build"
    echo "${targetTag}"
+    print "DEBUG: parameter foo = ${targetTag}"
    //sh "${ocCmd} start-build cakephp-example  --follow  --wait=true -n pushed  "
    sh "${ocCmd} describe istag jenkins:latest -n ci > result"
    def lines = readFile('result')
