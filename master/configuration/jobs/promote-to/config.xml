@@ -14,18 +14,17 @@
 
    
 
-   stage &apos;Deploy DEV&apos;
+   stage &apos;TAG DEV&apos;
 
 
    // tag for stage
-   sh &quot;${ocCmd} tag pusehed/cakephp-example:latest pusehed/cakephp-example:${v}&quot;
+   sh &quot;${ocCmd} tag pushed/cakephp-example:latest pushed/cakephp-example:jenkins -n pushed&quot;
 
-   stage &apos;Deploy STAGE&apos;
+   stage &apos;Promote STAGE&apos;
    // clean up. keep the imagestream
-   sh &quot;${ocCmd} delete bc,dc,svc,route -l app=tasks -n stage&quot;
+   sh &quot;${ocCmd} start-build ruby-sample-build-fc  -n pushed &quot;
    // deploy stage image
-   sh &quot;${ocCmd} new-app tasks:${v} -n stage&quot;
-   sh &quot;${ocCmd} expose svc/tasks -n stage&quot;
+
 }
 
 def version() {
