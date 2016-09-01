@@ -35,16 +35,16 @@
    echo "Starting Build"
    echo "${targetTag}"
     print "DEBUG: parameter foo = ${targetTag}"
-   //sh "${ocCmd} start-build cakephp-example  --follow  --wait=true -n pushed  "
-   sh "${ocCmd} describe istag cakephp-example:latest   > result"
+   sh "${ocCmd} start-build cakephp-example  --follow  --wait=true  -n pipe  "
+   sh "${ocCmd} describe istag cakephp-example:latest -n pipe  > result"
    def lines = readFile('result')
    echo "App Succesfully built  based on following Tag information "
    echo "${lines}"
 
    stage 'TAG Image'
    // tag for stage
-   sh "${ocCmd} tag cakephp-example:latest cakephp-example:dev "
-   sh "${ocCmd} describe istag cakephp-example:latest | grep commit > commitinfo"
+   sh "${ocCmd} tag cakephp-example:latest cakephp-example:dev   -n pipe "
+   sh "${ocCmd} describe istag cakephp-example:latest  -n pipe | grep commit > commitinfo"
    def lines2 = readFile('commitinfo')
    echo "App Succesfully Tagged  based on following Tag information "
    echo "${lines2}"
@@ -57,7 +57,7 @@
    // clean up. keep the imagestream
    //sh "${ocCmd} start-build ruby-sample-build  --follow  --wait=true -n pushed "
    // deploy stage image
-   sh "${ocCmd} tag cakephp-example:dev cakephp-example:production "
+   sh "${ocCmd} tag cakephp-example:dev cakephp-example:production   -n pipe "
 
    echo "Success"
   stage 'Tag Source code '
