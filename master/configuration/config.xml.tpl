@@ -1,16 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
   <disabledAdministrativeMonitors/>
-  <version>1.642.2</version>
+  <version>1.651</version>
   <numExecutors>5</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
   <authorizationStrategy class="hudson.security.GlobalMatrixAuthorizationStrategy">
-    <permission>hudson.model.Computer.Configure:admin</permission>
     <permission>hudson.model.Computer.Configure:system_builder</permission>
+    <permission>hudson.model.Hudson.Administer:system_builder</permission>
+    <permission>hudson.model.Computer.Configure:admin</permission>
     <permission>hudson.model.Computer.Delete:admin</permission>
     <permission>hudson.model.Hudson.Administer:admin</permission>
-    <permission>hudson.model.Hudson.Administer:system_builder</permission>
     <permission>hudson.model.Hudson.Read:admin</permission>
     <permission>hudson.model.Hudson.Read:system_builder</permission>
     <permission>hudson.model.Item.Build:admin</permission>
@@ -25,25 +25,18 @@
     <permission>hudson.model.View.Create:admin</permission>
     <permission>hudson.model.View.Delete:admin</permission>
     <permission>hudson.scm.SCM.Tag:admin</permission>
+    <permission>hudson.model.Hudson.Read:view</permission>
+    <permission>hudson.model.Item.Read:view</permission>
   </authorizationStrategy>
   <securityRealm class="hudson.security.HudsonPrivateSecurityRealm">
     <disableSignup>true</disableSignup>
     <enableCaptcha>false</enableCaptcha>
   </securityRealm>
   <disableRememberMe>false</disableRememberMe>
-  <projectNamingStrategy class="jenkins.model.ProjectNamingStrategy$DefaultProjectNamingStrategy"/>
   <workspaceDir>${ITEM_ROOTDIR}/workspace</workspaceDir>
   <buildsDir>${ITEM_ROOTDIR}/builds</buildsDir>
-  <markupFormatter class="hudson.markup.RawHtmlMarkupFormatter" plugin="antisamy-markup-formatter@1.1">
-    <disableSyntaxHighlighting>false</disableSyntaxHighlighting>
-  </markupFormatter>
-  <jdks>
-    <jdk>
-      <name>JDK-8</name>
-      <home>/usr/lib/jvm/java-1.8.0</home>
-      <properties/>
-    </jdk>
-  </jdks>
+  <markupFormatter class="hudson.markup.RawHtmlMarkupFormatter"/>
+  <jdks/>
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
   <clouds>
@@ -61,7 +54,7 @@
     </hudson.model.AllView>
   </views>
   <primaryView>All</primaryView>
-  <slaveAgentPort>50000</slaveAgentPort>
+  <slaveAgentPort>${JNLP_PORT}</slaveAgentPort>
   <label>master</label>
   <nodeProperties/>
   <globalNodeProperties/>
