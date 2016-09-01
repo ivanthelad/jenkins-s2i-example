@@ -36,15 +36,15 @@
    echo "${targetTag}"
     print "DEBUG: parameter foo = ${targetTag}"
    //sh "${ocCmd} start-build cakephp-example  --follow  --wait=true -n pushed  "
-   sh "${ocCmd} describe istag jenkins:latest -n ci > result"
+   sh "${ocCmd} describe istag cakephp-example:latest   > result"
    def lines = readFile('result')
    echo "App Succesfully built  based on following Tag information "
    echo "${lines}"
 
    stage 'TAG Image'
    // tag for stage
-   sh "${ocCmd} tag pushed/cakephp-example:latest pushed/cakephp-example:jenkins -n pushed"
-   sh "${ocCmd} describe istag jenkins:latest -n ci| grep commit > commitinfo"
+   sh "${ocCmd} tag cakephp-example:latest cakephp-example:dev "
+   sh "${ocCmd} describe istag cakephp-example:latest | grep commit > commitinfo"
    def lines2 = readFile('commitinfo')
    echo "App Succesfully Tagged  based on following Tag information "
    echo "${lines2}"
@@ -55,8 +55,10 @@
    }
    stage 'Promote STAGE'
    // clean up. keep the imagestream
-   sh "${ocCmd} start-build ruby-sample-build-fc  --follow  --wait=true -n pushed "
+   //sh "${ocCmd} start-build ruby-sample-build  --follow  --wait=true -n pushed "
    // deploy stage image
+   sh "${ocCmd} tag cakephp-example:dev cakephp-example:production "
+
    echo "Success"
   stage 'Tag Source code '
   echo "TODO, Directly after promotion we should tag the source code in git "
